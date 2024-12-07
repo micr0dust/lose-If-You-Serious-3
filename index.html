@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-hant">
+
+<head>
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous">//jquery</script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+        integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+        crossorigin="anonymous">//bootstrap 4</script>
+    <link rel="stylesheet" href="./css/hide_scrollbar.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <title>帳號註冊</title>
+</head>
+
+<body>
+    <template id="space">
+        <div class="mt-5" style="visibility: hidden;"><button></button></div>
+    </template>
+    <button class="btn btn-light" onclick="hint()">提示</button>
+    <div class="text-center mt-5">
+        <img src="data:image/svg+xml;utf8,
+            <svg xmlns='http://www.w3.org/2000/svg' width='500' height='100'>
+                <rect width='100%' height='100%' fill='white'/>
+                <text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='72' fill='black' font-weight='bold' class='no-select'>認真你就輸了3</text>
+            </svg>" 
+        alt="認真你就輸了3" class="no-select" />
+    </div>
+    <div class="container">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-md-6">
+                <div id="login" class="card">
+                    <div class="card-body">
+                        <h4 class="card-title text-center">登入</h4>
+                        <div class="form-group">
+                            <label for="account">帳號</label>
+                            <input type="email" class="form-control" id="account" autocomplete="off">
+                            <label id="account_warn" class="text-danger" style="display: none;">帳號不得為空</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">密碼</label>
+                            <input type="password" class="form-control" id="password" autocomplete="off">
+                            <label id="password_warn" class="text-danger" style="display: none;">密碼不得為空</label>
+                            <label id="password_wrong" class="text-danger" style="display: none;">密碼錯誤</label>
+                        </div>
+                        <button class="btn btn-primary" onclick="login()">登入</button>
+                    </div>
+                </div>
+                <div id="register" class="card">
+                    <div class="card-body">
+                        <h4 class="card-title text-center">註冊</h4>
+                        <div class="form-group">
+                            <label for="user">請輸入 你的姓名</label>
+                            <input type="text" class="form-control" id="user" autocomplete="off">
+                            <label id="name_warn" class="text-danger" style="display: none;">帳號不得為空</label>
+                            <label id="copy_hint" class="text-danger" style="display: none;">複製貼上而已不難吧？？</label>
+                        </div>
+                        <button class="btn btn-primary" onclick="register()">確認</button>
+                    </div>
+                </div>
+                <div id="rule" class="card mt-3">
+                    <div class="card-body">
+                        <h4 class="card-title text-center">遊戲說明</h4>
+                        <p>這是一個線上解謎遊戲，透過平時使用網頁的各種操作來解謎，以下是一些遊玩建議：</p>
+                        <li>請使用電腦遊玩，有些操作只有電腦才做得到。</li>
+                        <li>為防止網頁畫面被改變，建議在沒有擴充功能的瀏覽器下遊玩。</li>
+                        <li>建議別使用瀏覽器的開發者工具看原始碼，除非真的解不開。</li>
+                        <li>左上方皆會有提示按鈕。</li>
+                        <li>按下提示按鈕後會再次確認才顯示提示，防止誤觸。</li>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                
+    <script language="JavaScript">
+        const space_template = document.getElementById('space').content;
+        function insertSpace(eleId, position = 'afterend') {
+            // can be beforebegin, afterbegin, beforeend or afterend
+            const element = document.getElementById(eleId);
+            const clone = document.importNode(space_template, true);
+            element.insertAdjacentElement(position, clone.firstElementChild);
+        }
+        for (let i = 0; i < 10; i++)
+            insertSpace('login');
+        for (let i = 0; i < 2; i++)
+        insertSpace('rule');
+        
+        function login() {
+            const account = document.getElementById('account').value;
+            if (account === '') {
+                document.getElementById('account_warn').style.display = 'block';
+                return;
+            }
+            document.getElementById('account_warn').style.display = 'none';
+            const password = document.getElementById('password').value;
+            if (password === '') {
+                document.getElementById('password_warn').style.display = 'block';
+                return;
+            }
+            document.getElementById('password_warn').style.display = 'none';
+            if (account === '你的姓名') {
+                document.getElementById('password_wrong').style.display = 'block';
+                return;
+            }
+            document.getElementById('password_wrong').style.display = 'none';
+            Swal.fire({
+                icon: "error",
+                title: "查無此帳號",
+                text: "請確認帳號密碼是否正確",
+                footer: '<a href="#account">需要提示嗎？如果真的想不出來可以點我</a>'
+            });
+        }
+        function register() {
+            const name = document.getElementById('user').value;
+            if (name === '') {
+                document.getElementById('name_warn').style.display = 'block';
+                return;
+            }
+            document.getElementById('name_warn').style.display = 'none';
+            if (name != '你的姓名') {
+                document.getElementById('copy_hint').style.display = 'block';
+                return;
+            }
+            document.getElementById('copy_hint').style.display = 'none';
+            Swal.fire({
+                title: "註冊成功",
+                text: "歡迎遊玩，點擊「確認」前往下一關！",
+                confirmButtonText: "確認",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.replace("./tic-tac-toe.html");
+                }
+            });
+        }
+        function hint(){
+            Swal.fire({
+                title: "提示",
+                text: "確定要查看遊戲提示？",
+                showDenyButton: true,
+                confirmButtonText: `是`,
+                denyButtonText: `否`
+            }).then((result) => {
+                if (result.isConfirmed)
+                    Swal.fire({
+                        title: "提示",
+                        html: "<br/>輸入帳號與密碼後按下登入<br/><p style='color: white;'>哪有人沒註冊就想登入啊？？？</p>",
+                        confirmButtonText: "確認",
+                    });
+            });
+        }
+    </script>
+    <script src="./script/lock.js"></script>
+</body>
+
+</html>
