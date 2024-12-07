@@ -4,7 +4,7 @@ const winState = [
     [0, 4, 8], [2, 4, 6]
 ];
 
-const board = Array(9).fill(' ');
+let board = Array(9).fill(' ');
 const players = ['O', 'X'];
 let counter = 0;
 
@@ -112,7 +112,7 @@ function next(ele){
         return;
     }
     const winline2 = checkWinLine(board);
-    if (winline.length > 0) {
+    if (winline2.length > 0) {
         end(winline2);
         return;
     }
