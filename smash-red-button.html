@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous">//jquery</script>
@@ -13,7 +14,7 @@
     <link rel="stylesheet" href="./css/hide_scrollbar.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <title>井字遊戲</title>
+    <title>紅色的按鈕</title>
     <style>
         .btn-group-vertical > .btn {
             width: 100px;
@@ -128,7 +129,7 @@
                     allowOutsideClick: false
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.replace("./index.html");
+                        window.location.replace("./menu");
                     }
                 });
             }else{
