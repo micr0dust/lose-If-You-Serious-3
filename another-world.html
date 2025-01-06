@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="./css/hide_scrollbar.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <title>顯眼的按鈕</title>
+    <title>另一個世界</title>
     <style>
         .small-text {
             font-size: 3px;
@@ -31,25 +31,45 @@
     <template id="space">
         <div class="mt-5" style="visibility: hidden;"><button></button></div>
     </template>
-    <p class="small-text text-white">會放大就應該會縮小吧？</p>
     <button class="btn btn-light" onclick="hint()">提示</button>
     <div class="text-center mt-5">
         <img src="data:image/svg+xml;utf8,
             <svg xmlns='http://www.w3.org/2000/svg' width='500' height='100'>
                 <rect width='100%' height='100%' fill='white'/>
                 <text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='72' fill='black' font-weight='bold' class='no-select'>認真你就輸了3</text>
-                <text x='6.4%' y='24%' dominant-baseline='middle' text-anchor='middle' font-size='3' fill='black' font-weight='bold' class='no-select'>試試按 ctrl + A</text>
             </svg>" 
         alt="認真你就輸了3" class="no-select" />
     </div>
-    <div class="container">
-        <div class="row" id="main">
-            <div class="col-12 text-center">
-                <h4 class="mt-5"><span class="mt-5 text-white">提示</span>跟答案都給你了，應該送分題吧？</h4>
+    <div id="main" class="container">
+        <div class="row">
+            <div class="col-6 text-center">
+                <h4 class="mt-5 text-white">按鈕又被藏起來了，找到通往下一關的按鈕</h4>
+                <h4 class="mt-1"><span class="text-white">你很閒的話也能幫我</span>解出：</h4>
+            </div>
+            <div class="input-group col-12 mt-3 d-flex justify-content-center">
+                <div class="input-group-prepend">
+                  <span id="first_slot" class="input-group-text">1</span>
+                  <span id="operation" class="input-group-text ml-1">+</span>
+                  <span id="sec_slot" class="input-group-text ml-1">1</span>
+                  <span class="input-group-text ml-1">=</span>
+                </div>
+                <input type="number" class="form-control col-1 ml-1">
+                <button class="btn btn-success ml-1" onclick="checkAnswer()">確認</button>
+            </div>
+            <div class="col-12 mt-3 d-flex justify-content-center">
+                <div class="col-6">
+                    <div class="progress">
+                        <div id="prog" class="progress-bar bg-success" style="width:0%"></div>
+                    </div>
+                </div>  
             </div>
             <div id="loader" class="loader loader-default"></div>
         </div>
-        <button class="btn btn-danger btn-large" id="btn-0" onclick="win()">通往下一關的按鈕</button>
+    </div>
+    <div class="d-flex justify-content-center">
+        <div style='width: 540px; height: 300px; overflow: hidden;'>
+            <iframe src="./subworld/another-world.html" width="620" height="340" frameborder="0" allowfullscreen style="border:0;"></iframe>
+        </div>
     </div>
                 
     <script language="JavaScript">
@@ -73,15 +93,50 @@
                 if (result.isConfirmed)
                     Swal.fire({
                         title: "提示",
-                        text: "可能是我提示寫太小了你看不到",
+                        text: "對深藍色的矩形使用滑鼠滾輪",
                         confirmButtonText: "確認",
                     });
             });
         }
 
+        function calculate(){
+            let first = document.getElementById('first_slot').innerText;
+            let sec = document.getElementById('sec_slot').innerText;
+            let operation = document.getElementById('operation').innerText;
+            if (operation == '+')
+                return parseInt(first) + parseInt(sec);
+            else if (operation == '-')
+                return parseInt(first) - parseInt(sec);
+            else if (operation == '*')
+                return parseInt(first) * parseInt(sec);
+            return 0;
+        }
+
+        function checkAnswer(){
+            let answer = document.querySelector('input').value;
+            if(answer == calculate()){
+                document.getElementById('first_slot').innerText = Math.floor(Math.random() * 10000 + 1);
+                document.getElementById('sec_slot').innerText = Math.floor(Math.random() * 10000 + 1);
+                document.getElementById('operation').innerText = ['+', '-', '*'][Math.floor(Math.random() * 3)];
+                document.querySelector('input').value = '';
+                let prog = document.getElementById('prog');
+                prog.style.width = parseFloat(prog.style.width) + (100-parseFloat(prog.style.width))/20 + '%';
+                prog.innerText = prog.style.width;
+            }else{
+                Swal.fire({
+                    title: "答案錯誤",
+                    text: "再想想看吧",
+                    customClass: {
+                        confirmButton: 'btn btn-warning'
+                    },
+                    confirmButtonText: "確認",
+                });
+            }
+        }
+
         function win(){
             let title = "恭喜";
-            let text = "按鈕很明顯吧";
+            let text = "這次有變比較難吧？";
             
             Swal.fire({
                 title: title,
@@ -90,7 +145,7 @@
                 allowOutsideClick: false
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.replace("./another-world");
+                    window.location.replace("./menu");
                 }
             });
         }

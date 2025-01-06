@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-hant">
+
+<head>
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous">//jquery</script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+        integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+        crossorigin="anonymous">//bootstrap 4</script>
+    <link rel="stylesheet" href="./css/hide_scrollbar.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <title>另一個世界</title>
+    <style>
+        .small-text {
+            font-size: 3px;
+            padding: 0%;
+            margin: 0%;
+        }
+        .btn-large {
+            font-size: 5em;
+        }
+    </style>
+</head>
+
+<body>
+    <template id="space">
+        <div class="mt-5" style="visibility: hidden;"><button></button></div>
+    </template>
+    <div id="title" class="container">
+        <button class="btn btn-danger btn-large mb-5" id="btn-0" onclick="window.parent.win()">通往下一關的按鈕</button>
+    </div>
+                
+    <script language="JavaScript">
+        const space_template = document.getElementById('space').content;
+        function insertSpace(eleId, position = 'afterend') {
+            // can be beforebegin, afterbegin, beforeend or afterend
+            const element = document.getElementById(eleId);
+            const clone = document.importNode(space_template, true);
+            element.insertAdjacentElement(position, clone.firstElementChild);
+        }
+        for (let i = 0; i < 10; i++)
+            insertSpace('title', 'beforebegin');     
+        nextBtn();
+    </script>
+    <script src="./script/lock.js"></script>
+</body>
+
+</html>
