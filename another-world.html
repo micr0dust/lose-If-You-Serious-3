@@ -87,6 +87,7 @@
                 title: "提示",
                 text: "確定要查看遊戲提示？",
                 showDenyButton: true,
+                confirmButtonColor: '#28a745',
                 confirmButtonText: `是`,
                 denyButtonText: `否`
             }).then((result) => {
@@ -94,6 +95,7 @@
                     Swal.fire({
                         title: "提示",
                         text: "對深藍色的矩形使用滑鼠滾輪",
+                        confirmButtonColor: '#28a745',
                         confirmButtonText: "確認",
                     });
             });
@@ -126,9 +128,7 @@
                 Swal.fire({
                     title: "答案錯誤",
                     text: "再想想看吧",
-                    customClass: {
-                        confirmButton: 'btn btn-warning'
-                    },
+                    confirmButtonColor: '#ffc107',
                     confirmButtonText: "確認",
                 });
             }
